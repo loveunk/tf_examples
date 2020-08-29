@@ -1,11 +1,6 @@
-try:
-    # %tensorflow_version only exists in Colab.
-    %tensorflow_version 2.x
-    # Load the TensorBoard notebook extension
-    %load_ext tensorboard
-except Exception:
-  pass
-
+# %tensorflow_version 2.x
+# Load the TensorBoard notebook extension
+# %load_ext tensorboard
 import tensorflow as tf
 import datetime
 
