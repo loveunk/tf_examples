@@ -1,4 +1,13 @@
+try:
+    # %tensorflow_version only exists in Colab.
+    %tensorflow_version 2.x
+    # Load the TensorBoard notebook extension
+    %load_ext tensorboard
+except Exception:
+  pass
+
 import tensorflow as tf
+import datetime
 
 mnist = tf.keras.datasets.mnist
 
@@ -16,6 +25,13 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(x_train, y_train, epochs=5)
+log_dir="logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+
+model.fit(x=x_train, 
+          y=y_train, 
+          epochs=5, 
+          validation_data=(x_test, y_test), 
+          callbacks=[tensorboard_callback])
 
 model.evaluate(x_test,  y_test, verbose=2)
